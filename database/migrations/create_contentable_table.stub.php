@@ -24,7 +24,7 @@ class CreateTablesTable extends Migration
         Schema::create(config('social.tags.morphs_table'), function (Blueprint $table) {
             $table->foreignId('tag_id');
             $table->morphs(config('social.tags.morphs'));
-
+            $table->unique(['tag_id', 'taggable_id', 'taggable_type']);
             $table->foreign('tag_id')
                 ->references('id')
                 ->on('contentable_tags')

@@ -43,4 +43,13 @@ trait Taggable
         $this->tagsRelation()->sync($tags);
         $this->save();
     }
+
+    public function hasTag($tag, ?string $type = null): bool
+    {
+        return $this->tags
+            ->when($type !== null, fn($query) => $query->where('type', $type))
+            ->contains(function ($modelTag) use ($tag) {
+                return $modelTag->name === $tag || $modelTag->id === $tag;
+            });
+    }
 }
