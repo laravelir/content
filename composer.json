@@ -1,7 +1,7 @@
 {
-    "name": "miladimos/package-skeleton",
+    "name": "laravelir/contentable",
     "description": "test description",
-    "homepage": "https://github.com/miladimos/package-skeleton",
+    "homepage": "https://github.com/laravelir/contentable",
     "type": "library",
     "version": "0.1.0",
     "keywords": [
@@ -9,8 +9,7 @@
         "laravel-package",
         "laravel support",
         "lumen packages",
-        "laravel packages",
-        "lumen support"
+        "laravel packages"
     ],
     "authors": [
         {
@@ -22,7 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Vendor\\Package\\": "src/"
+            "Laravelir\\Contentable\\": "src/"
         },
         "files": [
             "./src/helpers.php"
@@ -30,16 +29,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Vendor\\Package\\Tests\\": "tests"
+            "Laravelir\\Contentable\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Package\\Package\\Providers\\PackageServiceProvider"
+                "Contentable\\Contentable\\Providers\\ContentableServiceProvider"
             ],
             "aliases": {
-                "Package": "Vendor\\Package\\Facades\\Package"
+                "Contentable": "Laravelir\\Contentable\\Facades\\Contentable"
             }
         }
     },
