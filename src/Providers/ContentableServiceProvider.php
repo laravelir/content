@@ -18,7 +18,7 @@ class ContentableServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . "/../../config/contentable.php", 'contentable');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         $this->registerFacades();
     }
@@ -27,6 +27,8 @@ class ContentableServiceProvider extends ServiceProvider
     {
 
         $this->registerCommands();
+        $this->registerConfig();
+        $this->registerMigrations();
     }
 
     private function registerFacades()
@@ -46,18 +48,18 @@ class ContentableServiceProvider extends ServiceProvider
         }
     }
 
-    public function publishConfig()
+    public function registerConfig()
     {
         $this->publishes([
             __DIR__ . '/../../config/contentable.php' => config_path('contentable.php')
         ], 'contentable-config');
     }
 
-    protected function publishMigrations()
+    protected function registerMigrations()
     {
         $timestamp = date('Y_m_d_His', time());
         $this->publishes([
-            __DIR__ . '/../database/migrations/contentable_tables.stub.php' => database_path() . "/migrations/{$timestamp}_contentable_tables.php",
+            __DIR__ . '/../../database/migrations/create_contentable_table.stub.php' => database_path() . "/migrations/{$timestamp}_create_contentable_table.php",
         ], 'contentable-migrations');
     }
 }

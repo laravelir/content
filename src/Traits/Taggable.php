@@ -9,8 +9,8 @@ trait Taggable
 {
     protected static function booted()
     {
-        static::deleted(function (Model $entityModel) {
-            foreach ($entityModel->tags as $tag) {
+        static::deleted(function (Model $model) {
+            foreach ($model->tags as $tag) {
                 $tag->forceDelete();
             }
         });
@@ -23,7 +23,7 @@ trait Taggable
 
     public function tagsRelation(): MorphToMany
     {
-        return $this->morphToMany(config('social.tags.model'), config('social.tags.morphs'), config('social.tags.morphs_table'));
+        return $this->morphToMany(config('contentable.tags.model'), 'taggable', 'contentable_taggables');
     }
 
     public function attachTag($tag)
@@ -44,10 +44,9 @@ trait Taggable
         $this->save();
     }
 
-    public function hasTag($tag, ?string $type = null): bool
+    public function hasTag($tag): bool
     {
         return $this->tags
-            ->when($type !== null, fn($query) => $query->where('type', $type))
             ->contains(function ($modelTag) use ($tag) {
                 return $modelTag->name === $tag || $modelTag->id === $tag;
             });

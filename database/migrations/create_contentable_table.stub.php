@@ -4,26 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablesTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('contentable_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->index();
+            $table->uuid()->index();
+            $table->string('title')->unique()->index();
             $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create(config('social.tags.morphs_table'), function (Blueprint $table) {
+        Schema::create('contentable_taggables', function (Blueprint $table) {
             $table->foreignId('tag_id');
-            $table->morphs(config('social.tags.morphs'));
+            $table->morphs('taggable');
             $table->unique(['tag_id', 'taggable_id', 'taggable_type']);
             $table->foreign('tag_id')
                 ->references('id')
@@ -33,15 +29,10 @@ class CreateTablesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists(config('social.categories.table'));
-        Schema::dropIfExists(config('social.categories.morphs'));
+        Schema::dropIfExists('contentable_tags');
+        Schema::dropIfExists('contentable_taggables');
     }
-}
+};

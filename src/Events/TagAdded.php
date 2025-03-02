@@ -1,33 +1,17 @@
 <?php
 
-namespace Conner\Tagging\Events;
+namespace Laravelir\Contentable\Events;
 
-use Conner\Tagging\Model\Tagged;
-use Conner\Tagging\Taggable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Events\ShouldDispatchAfterCommit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Laravelir\Contentable\Models\Tag;
 
-class TagAdded
+class TagUpdated implements ShouldDispatchAfterCommit
 {
-    use SerializesModels;
+    use SerializesModels, Dispatchable, InteractsWithSockets;
 
-    /** @var Taggable|Model * */
-    public $model;
-
-    /** @var string */
-    public $tagSlug;
-
-    /** @var Tagged */
-    public $tagged;
-
-    /**
-     * Create a new event instance.
-     *
-     * @param  Taggable|Model  $model
-     */
-    public function __construct($model, string $tagSlug)
-    {
-        $this->model = $model;
-        $this->tagSlug = $tagSlug;
-=    }
+    public function __construct(public Model $model, public Tag $tag) {}
 }

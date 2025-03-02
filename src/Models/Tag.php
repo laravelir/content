@@ -3,6 +3,7 @@
 namespace Laravelir\Contentable\Models;
 
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -15,14 +16,13 @@ class Tag extends Model
 
     protected $guarded = [];
 
-    // protected $fillable = ['name', 'slug', 'deleted_at'];
-
     protected static function boot()
     {
         parent::boot();
 
         self::creating(function ($model) {
             $model->uuid = (string)Uuid::uuid4();
+            $model->slug = Str::slug($model->title);
         });
     }
 
@@ -31,12 +31,12 @@ class Tag extends Model
         return $this->morphTo();
     }
 
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
-    }
+    // public function sluggable(): array
+    // {
+    //     return [
+    //         'slug' => [
+    //             'source' => 'title'
+    //         ]
+    //     ];
+    // }
 }

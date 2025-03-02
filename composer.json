@@ -8,7 +8,6 @@
         "laravel",
         "laravel-package",
         "laravel support",
-        "lumen packages",
         "laravel packages"
     ],
     "authors": [
@@ -35,7 +34,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Contentable\\Contentable\\Providers\\ContentableServiceProvider"
+                "Laravelir\\Contentable\\Providers\\ContentableServiceProvider"
             ],
             "aliases": {
                 "Contentable": "Laravelir\\Contentable\\Facades\\Contentable"
